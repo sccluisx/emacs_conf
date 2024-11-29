@@ -17,9 +17,14 @@
 ;; Basic UI and Navigation
 ;; ------------------------
 
-;; Disable toolbar, scrollbar, and startup screen
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+;; Disable toolbar and scrollbar if available
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1)) ;; Disable toolbar
+
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1)) ;; Disable scrollbar
+
+;; Disable startup screen
 (setq inhibit-startup-screen t)
 
 ;; Show line numbers
