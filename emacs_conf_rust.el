@@ -17,15 +17,14 @@
 ;; Basic UI and Navigation
 ;; ------------------------
 
-;; Disable toolbar and scrollbar if available
+;; Disable toolbar, scrollbar, and startup screen if in GUI mode
 (when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1)) ;; Disable toolbar
+  (tool-bar-mode -1)) ;; Disable toolbar in GUI mode
 
 (when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1)) ;; Disable scrollbar
+  (scroll-bar-mode -1)) ;; Disable scrollbar in GUI mode
 
-;; Disable startup screen
-(setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t) ;; Disable startup screen
 
 ;; Show line numbers
 (global-display-line-numbers-mode t)
@@ -34,27 +33,36 @@
 (set-face-attribute 'default nil :height 120) ;; Adjust font size
 (load-theme 'wombat t) ;; Replace with your preferred theme
 
-;; Better file navigation
+;; ------------------------
+;; Package Configurations
+;; ------------------------
+
+;; File navigation with Ivy
 (use-package ivy
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t
-        ivy-count-format "(%d/%d) "))
+        ivy-count-format "(%d/%d) ")) ;; Ensure proper closing parentheses
 
-;; Helpful for better command explanations
 (use-package helpful
-  :bind ([remap describe-function] . helpful-callable
-         [remap describe-variable] . helpful-variable
-         [remap describe-key] . helpful-key))
+  :bind
+  ([remap describe-function] . helpful-callable))
 
+(use-package helpful
+  :bind
+  ([remap describe-variable] . helpful-variable))
+
+(use-package helpful
+  :bind
+  ([remap describe-key] . helpful-key))
+  
 ;; -----------------
 ;; Rust Development
 ;; -----------------
 
-;; Install `rustic` for Rust mode
+;; Configure Rustic for Rust development
 (use-package rustic
   :config
-  ;; Use LSP for Rust
   (setq rustic-lsp-client 'lsp-mode
         rustic-format-on-save t) ;; Automatically format on save
   :hook (rust-mode . lsp-deferred))
@@ -154,3 +162,16 @@
 ;; ----------------------
 ;; End of Configuration
 ;; ----------------------
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(helpful rustic ripgrep projectile magit lsp-ui ivy git-timemachine diff-hl dap-mode company)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
